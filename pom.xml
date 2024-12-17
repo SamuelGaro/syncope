@@ -396,8 +396,8 @@ under the License.
     <syncope.version>${project.version}</syncope.version>
 
     <connid.version>1.6.0.0-RC1</connid.version>
-    <connid.soap.version>1.5.0-SNAPSHOT</connid.soap.version>
-    <connid.rest.version>1.1.0-SNAPSHOT</connid.rest.version>
+    <connid.soap.version>1.5.0-RC1</connid.soap.version>
+    <connid.rest.version>1.1.0-RC1</connid.rest.version>
     <connid.db.version>2.3.0</connid.db.version>
     <connid.csvdir.version>0.8.9</connid.csvdir.version>
     <connid.ldap.version>1.5.9</connid.ldap.version>
@@ -409,46 +409,46 @@ under the License.
     <connid.okta.version>3.0.5</connid.okta.version>
     <connid.cmd.version>0.5</connid.cmd.version>
 
-    <cxf.version>4.1.0-SNAPSHOT</cxf.version>
+    <cxf.version>4.1.0</cxf.version>
     <bouncycastle.version>1.79</bouncycastle.version>
-    <nimbus-jose-jwt.version>9.45</nimbus-jose-jwt.version>
+    <nimbus-jose-jwt.version>9.47</nimbus-jose-jwt.version>
 
-    <spring-boot.version>3.3.5</spring-boot.version>
-    <spring-cloud-gateway.version>4.1.5</spring-cloud-gateway.version>
+    <spring-boot.version>3.3.6</spring-boot.version>
+    <spring-cloud-gateway.version>4.1.6</spring-cloud-gateway.version>
 
     <openjpa.version>4.0.1</openjpa.version>
 
     <jasypt.version>1.9.3</jasypt.version>
 
-    <groovy.version>5.0.0-alpha-10</groovy.version>
+    <groovy.version>5.0.0-alpha-11</groovy.version>
 
     <flowable.version>7.1.0</flowable.version>
     <flowable-old.version>6.8.1</flowable-old.version>
 
     <disruptor.version>3.4.4</disruptor.version>
 
-    <elasticsearch.version>8.15.3</elasticsearch.version>
-    <opensearch.version>2.17.1</opensearch.version>
-    <opensearch-java.version>2.16.0</opensearch-java.version>
+    <elasticsearch.version>8.17.0</elasticsearch.version>
+    <opensearch.version>2.18.0</opensearch.version>
+    <opensearch-java.version>2.19.0</opensearch-java.version>
 
     <commons-lang3.version>3.17.0</commons-lang3.version>
     <commons-jexl.version>3.4.0</commons-jexl.version>
-    <commons-text.version>1.12.0</commons-text.version>
+    <commons-text.version>1.13.0</commons-text.version>
 
     <pac4j.version>6.0.6</pac4j.version>
 
-    <cas.version>7.1.1</cas.version>
+    <cas.version>7.1.3</cas.version>
     <cas-client.version>4.0.4</cas-client.version>
 
-    <swagger-core.version>2.2.25</swagger-core.version>
-    <swagger-ui.version>5.17.14</swagger-ui.version>
+    <swagger-core.version>2.2.27</swagger-core.version>
+    <swagger-ui.version>5.18.2</swagger-ui.version>
 
     <jquery-slimscroll.version>1.3.8</jquery-slimscroll.version>
     <jquery-cookie.version>1.4.1-1</jquery-cookie.version>
 
     <bootbox.version>6.0.0</bootbox.version>
     <bootstrap5-toggle.version>5.1.1</bootstrap5-toggle.version>
-    <font-awesome.version>6.5.2</font-awesome.version>
+    <font-awesome.version>6.7.1</font-awesome.version>
     <ionicons.version>2.0.1</ionicons.version>
     <codemirror.version>5.62.2</codemirror.version>
     <googlediffmatchpath.version>895a9512bb</googlediffmatchpath.version>
@@ -467,8 +467,8 @@ under the License.
     <curator.version>5.7.1</curator.version>
     <zookeeper.version>3.9.3</zookeeper.version>
 
-    <zonky.embedded-postgres.version>2.0.7</zonky.embedded-postgres.version>
-    <zonky.embedded-postgres-binaries.version>17.0.0</zonky.embedded-postgres-binaries.version>
+    <zonky.embedded-postgres.version>2.1.0</zonky.embedded-postgres.version>
+    <zonky.embedded-postgres-binaries.version>17.2.0</zonky.embedded-postgres-binaries.version>
 
     <testds.rootDn>o=isp</testds.rootDn>
     <testds.bindDn>uid=admin,ou=system</testds.bindDn>
@@ -494,21 +494,21 @@ under the License.
     <cargo.rmi.port>9805</cargo.rmi.port>
     <cargo.deployable.ping.timeout>60000</cargo.deployable.ping.timeout>
 
-    <tomcat.version>10.1.31</tomcat.version>
-    <wildfly.version>34.0.0.Final</wildfly.version>
-    <payara.version>6.2024.10</payara.version>
-    <jakarta.faces.version>4.1.1</jakarta.faces.version>
+    <tomcat.version>10.1.33</tomcat.version>
+    <wildfly.version>34.0.1.Final</wildfly.version>
+    <payara.version>6.2024.11</payara.version>
+    <jakarta.faces.version>4.1.2</jakarta.faces.version>
 
     <docker.postgresql.version>17-alpine</docker.postgresql.version>
     <docker.mysql.version>9.0</docker.mysql.version>
     <docker.mariadb.version>11</docker.mariadb.version>
     <docker.oracle.version>23-slim-faststart</docker.oracle.version>
-    <docker.neo4j.version>5.24.2</docker.neo4j.version>
+    <docker.neo4j.version>5.25.1</docker.neo4j.version>
 
     <jdbc.postgresql.version>42.7.4</jdbc.postgresql.version>
     <jdbc.mysql.version>9.1.0</jdbc.mysql.version>
-    <jdbc.mariadb.version>3.5.0</jdbc.mariadb.version>
-    <jdbc.oracle.version>23.5.0.24.07</jdbc.oracle.version>
+    <jdbc.mariadb.version>3.5.1</jdbc.mariadb.version>
+    <jdbc.oracle.version>23.6.0.24.10</jdbc.oracle.version>
 
     <bundles.directory>${project.build.directory}/bundles</bundles.directory>
 
@@ -653,14 +653,6 @@ under the License.
         <version>7.1.0</version>
       </dependency>
 
-      <!-- TMP until Spring Boot 3.3.6-->
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-framework-bom</artifactId>
-        <version>6.1.15-SNAPSHOT</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -1294,7 +1286,7 @@ under the License.
       <dependency>
         <groupId>org.jsoup</groupId>
         <artifactId>jsoup</artifactId>
-        <version>1.18.1</version>
+        <version>1.18.3</version>
       </dependency>
 
       <dependency>
@@ -1321,7 +1313,7 @@ under the License.
       <dependency>
         <groupId>com.icegreen</groupId>
         <artifactId>greenmail</artifactId>
-        <version>2.1.0</version>
+        <version>2.1.2</version>
         <exclusions>
           <exclusion>
             <groupId>com.sun.mail</groupId>
@@ -1355,11 +1347,10 @@ under the License.
         <version>${cxf.version}</version>
         <scope>test</scope>
       </dependency>
-      <!-- TMP: move back to ${spring-cloud-gateway.version} as soon as possible -->
       <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-contract-wiremock</artifactId>
-        <version>4.1.4</version>
+        <version>4.1.5</version>
         <scope>test</scope>
       </dependency>
     </dependencies>
@@ -1392,17 +1383,6 @@ under the License.
       <releases>
         <enabled>true</enabled>
       </releases>
-    </repository>
-    <repository>
-      <id>repository.spring.snapshot</id>
-      <name>Spring Snapshot Repository</name>
-      <url>https://repo.spring.io/snapshot</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
     </repository>
     <!-- Excluding useless transitive repositories -->
     <repository>
@@ -1502,7 +1482,7 @@ under the License.
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.11.1</version>
+          <version>3.11.2</version>
           <configuration>
             <release>${targetJdk}</release>
             <additionalOptions>
@@ -1640,7 +1620,7 @@ under the License.
         <plugin>
           <groupId>org.codehaus.cargo</groupId>
           <artifactId>cargo-maven3-plugin</artifactId>
-          <version>1.10.15</version>
+          <version>1.10.16</version>
           <configuration>
             <container>
               <log>${project.build.directory}/log/cargo.log</log>
@@ -1745,7 +1725,7 @@ under the License.
         <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-          <version>4.0.0.4121</version>
+          <version>5.0.0.4389</version>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -2029,7 +2009,7 @@ under the License.
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.11.1</version>
+        <version>3.11.2</version>
         <configuration>
           <source>${targetJdk}</source>
           <destDir>apidocs/4.0</destDir>
@@ -2097,7 +2077,7 @@ under the License.
           <plugin>
             <groupId>org.cyclonedx</groupId>
             <artifactId>cyclonedx-maven-plugin</artifactId>
-            <version>2.9.0</version>
+            <version>2.9.1</version>
             <executions>
               <execution>
                 <phase>package</phase>
@@ -2170,7 +2150,7 @@ under the License.
           <plugin>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctor-maven-plugin</artifactId>
-            <version>3.1.0</version>
+            <version>3.1.1</version>
             <inherited>false</inherited>
             <dependencies>
               <dependency>
@@ -2359,7 +2339,7 @@ under the License.
 
       <properties>
         <mockito.version>5.14.2</mockito.version>
-        <byte-buddy.version>1.15.8</byte-buddy.version>
+        <byte-buddy.version>1.15.11</byte-buddy.version>
       </properties>
 
       <dependencyManagement>

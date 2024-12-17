@@ -73,7 +73,7 @@ public class StreamPushJobDelegate extends PushJobDelegate implements SyncopeStr
     private ExternalResource externalResource(
             final AnyType anyType,
             final List<String> columns,
-            final List<String> propagationActions) throws JobExecutionException {
+            final List<String> propagationActions) {
 
         Provision provision = new Provision();
         provision.setAnyType(anyType.getKey());
@@ -104,7 +104,7 @@ public class StreamPushJobDelegate extends PushJobDelegate implements SyncopeStr
         propagationActions.forEach(key -> {
             Implementation impl = implementationDAO.findById(key).orElse(null);
             if (impl == null || !IdMImplementationType.PROPAGATION_ACTIONS.equals(impl.getType())) {
-                LOG.debug("Invalid " + Implementation.class.getSimpleName() + " {}, ignoring...", key);
+                LOG.debug("Invalid {} {}, ignoring...", Implementation.class.getSimpleName(), key);
             } else {
                 resource.add(impl);
             }

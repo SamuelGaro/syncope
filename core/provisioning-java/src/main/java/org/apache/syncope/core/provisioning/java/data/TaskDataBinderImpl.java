@@ -19,6 +19,7 @@
 package org.apache.syncope.core.provisioning.java.data;
 
 import java.util.Comparator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -126,9 +127,8 @@ public class TaskDataBinderImpl extends AbstractExecutableDatabinder implements 
     }
 
     protected void fill(final ProvisioningTask<?> provisioningTask, final ProvisioningTaskTO provisioningTaskTO) {
-        if (provisioningTask instanceof PushTask && provisioningTaskTO instanceof PushTaskTO) {
-            PushTask pushTask = (PushTask) provisioningTask;
-            PushTaskTO pushTaskTO = (PushTaskTO) provisioningTaskTO;
+        if (provisioningTask instanceof final PushTask pushTask
+            && provisioningTaskTO instanceof final PushTaskTO pushTaskTO) {
 
             Implementation jobDelegate = pushTaskTO.getJobDelegate() == null
                     ? implementationDAO.findByType(IdRepoImplementationType.TASKJOB_DELEGATE).stream().
@@ -159,9 +159,8 @@ public class TaskDataBinderImpl extends AbstractExecutableDatabinder implements 
             // remove all filters not contained in the TO
             pushTask.getFilters().entrySet().
                     removeIf(filter -> !pushTaskTO.getFilters().containsKey(filter.getKey()));
-        } else if (provisioningTask instanceof PullTask && provisioningTaskTO instanceof PullTaskTO) {
-            PullTask pullTask = (PullTask) provisioningTask;
-            PullTaskTO pullTaskTO = (PullTaskTO) provisioningTaskTO;
+        } else if (provisioningTask instanceof final PullTask pullTask
+            && provisioningTaskTO instanceof final PullTaskTO pullTaskTO) {
 
             Implementation jobDelegate = pullTaskTO.getJobDelegate() == null
                     ? implementationDAO.findByType(IdRepoImplementationType.TASKJOB_DELEGATE).stream().
@@ -270,8 +269,8 @@ public class TaskDataBinderImpl extends AbstractExecutableDatabinder implements 
         macroTask.getFormPropertyDefs().clear();
         macroTaskTO.getFormPropertyDefs().forEach(fpdTO -> {
             FormPropertyDef fpd = entityFactory.newEntity(FormPropertyDef.class);
-            fpd.setKey(fpdTO.getKey());
             fpd.setName(fpdTO.getName());
+            fpd.getLabels().putAll(fpdTO.getLabels());
             fpd.setType(fpdTO.getType());
             fpd.setReadable(fpdTO.isReadable());
             fpd.setWritable(fpdTO.isWritable());
@@ -417,9 +416,8 @@ public class TaskDataBinderImpl extends AbstractExecutableDatabinder implements 
         scheduler.getNextTrigger(AuthContextUtils.getDomain(), JobNamer.getJobName(schedTask)).
                 ifPresent(schedTaskTO::setNextExec);
 
-        if (schedTaskTO instanceof ProvisioningTaskTO && schedTask instanceof ProvisioningTask) {
-            ProvisioningTaskTO provisioningTaskTO = (ProvisioningTaskTO) schedTaskTO;
-            ProvisioningTask<?> provisioningTask = (ProvisioningTask<?>) schedTask;
+        if (schedTaskTO instanceof final ProvisioningTaskTO provisioningTaskTO
+            && schedTask instanceof final ProvisioningTask<?> provisioningTask) {
 
             provisioningTaskTO.setResource(provisioningTask.getResource().getKey());
 
@@ -499,6 +497,7 @@ public class TaskDataBinderImpl extends AbstractExecutableDatabinder implements 
                     FormPropertyDefTO fpdTO = new FormPropertyDefTO();
                     fpdTO.setKey(fpd.getKey());
                     fpdTO.setName(fpd.getName());
+                    fpdTO.getLabels().putAll(fpd.getLabels());
                     fpdTO.setType(fpd.getType());
                     fpdTO.setReadable(fpd.isReadable());
                     fpdTO.setWritable(fpd.isWritable());
@@ -581,7 +580,7 @@ public class TaskDataBinderImpl extends AbstractExecutableDatabinder implements 
     }
 
     @Override
-    public SyncopeForm getMacroTaskForm(final MacroTask task) {
+    public SyncopeForm getMacroTaskForm(final MacroTask task, final Locale locale) {
         if (task.getFormPropertyDefs().isEmpty()) {
             throw new NotFoundException("No form properties defined for MacroTask " + task.getKey());
         }
@@ -608,13 +607,13 @@ public class TaskDataBinderImpl extends AbstractExecutableDatabinder implements 
 
         form.getProperties().addAll(task.getFormPropertyDefs().stream().map(fpd -> {
             FormProperty prop = new FormProperty();
-            prop.setId(fpd.getKey());
-            prop.setName(fpd.getName());
+            prop.setId(fpd.getName());
+            prop.setName(fpd.getLabels().getOrDefault(locale, fpd.getName()));
             prop.setReadable(fpd.isReadable());
             prop.setRequired(fpd.isRequired());
             prop.setWritable(fpd.isWritable());
             prop.setType(fpd.getType());
-            actions.flatMap(a -> a.getDefaultValue(fpd.getKey())).ifPresent(v -> prop.setValue(v));
+            actions.flatMap(a -> a.getDefaultValue(fpd.getName())).ifPresent(v -> prop.setValue(v));
             switch (prop.getType()) {
                 case String ->
                     prop.setStringRegEx(fpd.getStringRegEx());
@@ -623,12 +622,11 @@ public class TaskDataBinderImpl extends AbstractExecutableDatabinder implements 
                     prop.setDatePattern(fpd.getDatePattern());
 
                 case Enum ->
-                    fpd.getEnumValues().
-                            forEach((key, value) -> prop.getEnumValues().add(new FormPropertyValue(key, value)));
+                    fpd.getEnumValues().forEach((k, v) -> prop.getEnumValues().add(new FormPropertyValue(k, v)));
 
                 case Dropdown -> {
-                    actions.ifPresent(a -> a.getDropdownValues(fpd.getKey()).
-                            forEach((key, value) -> prop.getDropdownValues().add(new FormPropertyValue(key, value))));
+                    actions.ifPresent(a -> a.getDropdownValues(fpd.getName()).
+                            forEach((k, v) -> prop.getDropdownValues().add(new FormPropertyValue(k, v))));
                     prop.setDropdownSingleSelection(fpd.isDropdownSingleSelection());
                     prop.setDropdownFreeForm(fpd.isDropdownFreeForm());
                 }

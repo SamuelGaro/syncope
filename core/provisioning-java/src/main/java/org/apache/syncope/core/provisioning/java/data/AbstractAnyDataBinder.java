@@ -75,6 +75,7 @@ import org.apache.syncope.core.persistence.api.entity.PlainAttrValue;
 import org.apache.syncope.core.persistence.api.entity.PlainSchema;
 import org.apache.syncope.core.persistence.api.entity.VirSchema;
 import org.apache.syncope.core.persistence.api.entity.anyobject.AnyObject;
+import org.apache.syncope.core.persistence.api.entity.user.User;
 import org.apache.syncope.core.provisioning.api.AccountGetter;
 import org.apache.syncope.core.provisioning.api.DerAttrHandler;
 import org.apache.syncope.core.provisioning.api.IntAttrName;
@@ -125,9 +126,17 @@ abstract class AbstractAnyDataBinder {
         anyTO.getResources().addAll(resources.stream().map(ExternalResource::getKey).collect(Collectors.toSet()));
     }
 
-    protected static RelationshipTO getRelationshipTO(final String relationshipType, final AnyObject otherEnd) {
-        return new RelationshipTO.Builder(relationshipType).
-                otherEnd(otherEnd.getType().getKey(), otherEnd.getKey(), otherEnd.getName()).
+    protected static RelationshipTO getRelationshipTO(
+            final String relationshipType,
+            final RelationshipTO.End end,
+            final Any<?> otherEnd) {
+
+        return new RelationshipTO.Builder(relationshipType, end).otherEnd(
+                otherEnd.getType().getKey(),
+                otherEnd.getKey(),
+                otherEnd instanceof User user
+                        ? user.getUsername()
+                        : ((AnyObject) otherEnd).getName()).
                 build();
     }
 
@@ -422,7 +431,7 @@ abstract class AbstractAnyDataBinder {
                 && !schema.isReadonly()
                 && JexlUtils.evaluateMandatoryCondition(schema.getMandatoryCondition(), any, derAttrHandler)) {
 
-            LOG.error("Mandatory schema " + schema.getKey() + " not provided with values");
+            LOG.error("Mandatory schema {} not provided with values", schema.getKey());
 
             reqValMissing.getElements().add(schema.getKey());
         }
@@ -517,8 +526,8 @@ abstract class AbstractAnyDataBinder {
                                 any.getAuxClasses().remove(auxClass);
                         }
                     },
-                    () -> LOG.debug("Invalid " + AnyTypeClass.class.getSimpleName() + " {}, ignoring...",
-                            patch.getValue()));
+                    () -> LOG.debug("Invalid {} {}, ignoring...",
+                            AnyTypeClass.class.getSimpleName(), patch.getValue()));
         }
 
         // 2. resources
@@ -535,8 +544,8 @@ abstract class AbstractAnyDataBinder {
                                 any.getResources().remove(resource);
                         }
                     },
-                    () -> LOG.debug("Invalid " + ExternalResource.class.getSimpleName() + " {}, ignoring...",
-                            patch.getValue()));
+                    () -> LOG.debug("Invalid {} {}, ignoring...",
+                            ExternalResource.class.getSimpleName(), patch.getValue()));
         }
 
         Set<ExternalResource> resources = anyUtils.getAllResources(any);
@@ -546,8 +555,7 @@ abstract class AbstractAnyDataBinder {
         anyUR.getPlainAttrs().stream().filter(patch -> patch.getAttr() != null).forEach(patch -> {
             PlainSchema schema = getPlainSchema(patch.getAttr().getSchema());
             if (schema == null) {
-                LOG.debug("Invalid " + PlainSchema.class.getSimpleName() + " {}, ignoring...",
-                        patch.getAttr().getSchema());
+                LOG.debug("Invalid {} {}, ignoring...", PlainSchema.class.getSimpleName(), patch.getAttr().getSchema());
             } else {
                 PlainAttr<?> attr = (PlainAttr<?>) any.getPlainAttr(schema.getKey()).orElse(null);
                 if (attr == null) {
@@ -620,7 +628,7 @@ abstract class AbstractAnyDataBinder {
                 flatMap(Optional::stream).
                 forEach(auxClass -> {
                     if (auxClass == null) {
-                        LOG.debug("Invalid " + AnyTypeClass.class.getSimpleName() + " {}, ignoring...", auxClass);
+                        LOG.debug("Invalid {} {}, ignoring...", AnyTypeClass.class.getSimpleName(), auxClass);
                     } else {
                         any.add(auxClass);
                     }
